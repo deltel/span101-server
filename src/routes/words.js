@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
             query.values = [req.query.search]
     } else {
         query.text = `
-        SELECT * 
+        SELECT id, value 
         FROM words
         LIMIT 10
         OFFSET $1;
@@ -54,6 +54,23 @@ router.post('/', async (req, res) => {
     try {
         await client.query(query)
         res.status(201).send()
+    } catch (e) {
+        res.status(500).send({ error: e.message })
+    }
+})
+
+router.get('/:value', async (req, res) => {
+    const query = {
+        text: `
+        SELECT * FROM words WHERE id = $1;
+        `,
+        values: [req.params.value]
+    }
+
+
+    try {
+        const response = await client.query(query)
+        res.send(response.rows)
     } catch (e) {
         res.status(500).send({ error: e.message })
     }

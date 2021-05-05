@@ -39,6 +39,9 @@ beforeEach(async () => {
             const values = Object.values(word)
             await client.query(text, values)
         })
+        const text = 'INSERT INTO words (id, value, translation, verb_type, part_of_speech, keyword) VALUES ($1, $2, $3, $4, $5, $6)'
+        const values = ['1', 'cien', 'one hundred', 'non-verb', 'noun', 'number']
+        await client.query(text, values)
     } catch (e) {
         console.log(e.message)
     }
@@ -49,13 +52,13 @@ afterAll(async () => {
 })
 
 
-test('Should get 3 words', async () => {
+test('Should get 4 words', async () => {
     try {
         const response = await request(app)
-                            .get('/words')
-                            .send()
-                            .expect(200)
-        expect(response.body.length).toBe(3)
+            .get('/words')
+            .send()
+            .expect(200)
+        expect(response.body.length).toBe(4)
     } catch (e) {
         console.log(e.message)
     }
@@ -64,15 +67,12 @@ test('Should get 3 words', async () => {
 test('Should find hola', async () => {
     try {
         const response = await request(app)
-                                .get('/words?search=hola')
-                                .send()
-                                .expect(200)
+            .get('/words?search=hola')
+            .send()
+            .expect(200)
         expect(response.body.length).toBe(1)
         expect(response.body[0]).toMatchObject({
-            value: 'hola',
-            translation: 'hello',
-            verb_type: 'non-verb',
-            part_of_speech: 'other'
+            value: 'hola'
         })
     } catch (e) {
         console.log(e.message)
@@ -99,6 +99,26 @@ test('Should add new word to database', async () => {
             .post('/words')
             .send(newWord)
             .expect(201)
+    } catch (e) {
+        console.error(e.message)
+    }
+})
+
+test('Should get word with id 1', async () => {
+    try {
+        const response = await request(app)
+            .get('/words/1')
+            .send()
+            .expect(200)
+        expect(response.body.length).toBe(1)
+        expect(response.body[0]).toMatchObject({
+            id: 1,
+            value: 'cien',
+            translation: 'one hundred',
+            part_of_speech: 'noun',
+            keyword: 'number',
+            verb_type: 'non-verb'
+        })
     } catch (e) {
         console.error(e.message)
     }

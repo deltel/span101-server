@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "start": "node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js -e hbs,js,css",
     "test": "env-cmd -f ./config/test.env jest --watchAll"
   },
   "jest": {
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "hbs": "^4.1.2",
     "pg": "^8.6.0",
     "supertest": "^6.1.3"
   },
