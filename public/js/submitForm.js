@@ -7,9 +7,11 @@ window.onload = async () => {
     const partOfSpeechField = document.querySelector('#partOfSpeech')
     const exampleField = document.querySelector('#example')
     const form = document.querySelector('form')
+    const feedbackDiv = document.querySelector('.feedback')
 
     const submitHandler = async (e) => {
         e.preventDefault()
+
         const formData = {
             value: valueField.value,
             translation: translationField.value,
@@ -18,25 +20,39 @@ window.onload = async () => {
             keyword: keywordField.value,
             example: exampleField.value
         }
+        const response = await fetch('/words', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-        try {
-            await fetch('/words', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+        const responseJson = await response.json()
 
-            valueField.value = ''
-            translationField.value = ''
-            partOfSpeechField.value = ''
-            verbTypeField.value = ''
-            keywordField.value = ''
-            exampleField.value = ''
-        } catch (e) {
-
+        if (response.status !== 201) {
+            feedbackDiv.textContent = responseJson.error
+            feedbackDiv.classList.toggle('danger')
+            setTimeout(() => {
+                feedbackDiv.textContent = undefined
+                feedbackDiv.classList.toggle('danger')
+            }, 2000)
+            return
         }
+
+        valueField.value = ''
+        translationField.value = ''
+        partOfSpeechField.value = ''
+        verbTypeField.value = ''
+        keywordField.value = ''
+        exampleField.value = ''
+
+        feedbackDiv.textContent = 'Successfully added'
+        feedbackDiv.classList.toggle('success')
+        setTimeout(() => {
+            feedbackDiv.textContent = undefined
+            feedbackDiv.classList.toggle('success')
+        }, 2000)
     }
 
     form.onsubmit = submitHandler

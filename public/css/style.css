@@ -165,10 +165,6 @@ form button {
     font-size: 18px;
 }
 
-.content-group .label {
-
-}
-
 .content-group .label, .update-info {
     opacity: 0.5
 }
@@ -179,6 +175,24 @@ form button {
     font-weight: 600;
 }
 
-.info-group {
 
+/* feedback */
+.feedback {
+    display: none;
+    background-color: #ccc;
+    height: 40px;
+    margin: 20px;
+    border-radius: 5px;
+    color: #fff;
+    padding: 20px;
+}
+
+.feedback.success {
+    display: block;
+    background-color: #1cd93c;
+}
+
+.feedback.danger {
+    display: block;
+    background-color: #ff2626;
 }

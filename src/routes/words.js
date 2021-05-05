@@ -2,6 +2,7 @@ const express = require('express')
 
 const client = require('../db/pg')
 const getQueryValues = require('../utils/queryUtil')
+const validateRequest = require('../utils/validateRequest')
 
 const router = express.Router()
 
@@ -52,6 +53,8 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        validateRequest(req.body)
+
         await client.query(query)
         res.status(201).send()
     } catch (e) {
@@ -66,7 +69,6 @@ router.get('/:value', async (req, res) => {
         `,
         values: [req.params.value]
     }
-
 
     try {
         const response = await client.query(query)

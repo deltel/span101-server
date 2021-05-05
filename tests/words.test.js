@@ -31,6 +31,13 @@ const newWord = {
     part_of_speech: 'noun'
 }
 
+const invalidWord = {
+    value: '',
+    translation: '',
+    verb_type: '',
+    part_of_speech: ''
+}
+
 beforeEach(async () => {
     try {
         await client.query('DELETE FROM words;')
@@ -99,6 +106,18 @@ test('Should add new word to database', async () => {
             .post('/words')
             .send(newWord)
             .expect(201)
+    } catch (e) {
+        console.error(e.message)
+    }
+})
+
+test('Should fail to add new word to database', async () => {
+    try {
+        const response = await request(app)
+            .post('/words')
+            .send(invalidWord)
+            .expect(500)
+        expect(response.body.error).toBe('Invalid form')
     } catch (e) {
         console.error(e.message)
     }
