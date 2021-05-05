@@ -4,7 +4,9 @@ const connectionString = process.env.DATABASE_URL || process.env.CONNECTION_STRI
 
 const client = new Client({
     connectionString,
-    ssl: process.env.DATABASE_URL ? true : false
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 
 client.connect()
