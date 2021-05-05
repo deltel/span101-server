@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
         query.text = `
         SELECT id, value 
         FROM words
+        ORDER BY value
         LIMIT 10
         OFFSET $1;
         `,
