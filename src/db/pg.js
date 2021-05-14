@@ -1,13 +1,22 @@
 const { Client } = require('pg')
 
 const connectionString = process.env.DATABASE_URL || process.env.CONNECTION_STRING
+let client;
 
-const client = new Client({
-    connectionString,
-    ssl: {
-        rejectUnauthorized: false
-    }
-})
+if (process.env.DATABASE_URL) {
+    // ssl for prod
+    client = new Client({
+        connectionString,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    })
+} else {
+    // no ssl for dev
+    client = new Client({
+        connectionString,
+    })
+}
 
 client.connect()
 
