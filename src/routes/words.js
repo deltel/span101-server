@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
         SELECT id, value 
         FROM words
         ORDER BY value
-        LIMIT 10
+        LIMIT 20
         OFFSET $1;
         `,
             query.values = [req.query.offset]

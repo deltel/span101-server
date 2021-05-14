@@ -27,12 +27,12 @@ window.onload = async () => {
 
     leftArrow.addEventListener('click', () => {
         if (offset === 0) return 
-        offset = offset - 10
+        offset = offset - 20
         getData()
     })
     
     rightArrow.addEventListener('click', () => {
-        offset = offset + 10
+        offset = offset + 20
         getData()
     })
 
