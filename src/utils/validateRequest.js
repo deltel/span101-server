@@ -1,5 +1,5 @@
 const validateRequest = (reqObj) => {
-    const validArr = ['value', 'translation', 'part_of_speech', 'verb_type']
+    const validArr = ['value', 'translation', 'part_of_speech', 'category']
     const arr = validArr.map((element) => {
         if (reqObj[element] === '' || reqObj[element] === undefined) return false
         return true
