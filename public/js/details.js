@@ -3,6 +3,29 @@ window.onload = async () => {
     const updateInfoDiv = document.querySelector('.update-info')
     const titleDiv = document.querySelector('.title')
 
+    const capitalizeWord = (label) => {
+        const capitalLetter = label.charAt(0).toUpperCase()
+        return capitalLetter + label.slice(1)
+    }
+
+    const transformLabel = (label) => {
+        if (label === 'part_of_speech') {
+            const tempValue = label.split('_')
+            tempValue[0] = capitalizeWord(tempValue[0])
+            tempValue[2] = capitalizeWord(tempValue[2])
+            return tempValue.join(' ')
+        }
+        
+        if (['created_at', 'updated_at'].includes(label)) {
+            const tempValue = label.split('_')
+            tempValue[0] = capitalizeWord(tempValue[0])
+            tempValue[1] = capitalizeWord(tempValue[1])
+            return tempValue.join(' ')
+        }
+
+        return capitalizeWord(label)
+    }
+
     try {
         const response = await fetch('/words' + window.location.pathname)
         const responseJson = await response.json()
@@ -16,7 +39,7 @@ window.onload = async () => {
             div.className = 'content-group'
             const labelSpan = document.createElement('span')
             labelSpan.className = 'label'
-            labelSpan.textContent = key
+            labelSpan.textContent = transformLabel(key)
             
             const valueSpan = document.createElement('span')
             valueSpan.className = 'value'
@@ -36,11 +59,11 @@ window.onload = async () => {
             div.className = 'info-group'
             const labelSpan = document.createElement('span')
             labelSpan.className = 'label'
-            labelSpan.textContent = key + ': '
+            labelSpan.textContent = transformLabel(key) + ': '
             
             const valueSpan = document.createElement('span')
             valueSpan.className = 'value'
-            valueSpan.textContent = new Date (data[key]).toString().slice(0, 24)
+            valueSpan.textContent = new Date (data[key]).toString().slice(0, 15)
 
             div.appendChild(labelSpan)
             div.appendChild(valueSpan)
