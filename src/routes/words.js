@@ -2,7 +2,7 @@ const express = require('express')
 
 const client = require('../db/pg')
 const getQueryValues = require('../utils/queryUtil')
-const validateRequest = require('../utils/validateRequest')
+const { validateRequest } = require('../utils/validateRequest')
 
 const router = express.Router()
 
