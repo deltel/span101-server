@@ -2,7 +2,7 @@ window.onload = async () => {
 
     const valueField = document.querySelector('#value')
     const translationField = document.querySelector('#translation')
-    const verbTypeField = document.querySelector('#verb-type')
+    const categoryField = document.querySelector('#category')
     const keywordField = document.querySelector('#keyword')
     const partOfSpeechField = document.querySelector('#partOfSpeech')
     const exampleField = document.querySelector('#example')
@@ -16,10 +16,11 @@ window.onload = async () => {
             value: valueField.value,
             translation: translationField.value,
             part_of_speech: partOfSpeechField.value,
-            verb_type: verbTypeField.value,
+            category: categoryField.value,
             keyword: keywordField.value,
             example: exampleField.value
         }
+        
         const response = await fetch('/words', {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -43,7 +44,7 @@ window.onload = async () => {
         valueField.value = ''
         translationField.value = ''
         partOfSpeechField.value = ''
-        verbTypeField.value = ''
+        categoryField.value = ''
         keywordField.value = ''
         exampleField.value = ''
 

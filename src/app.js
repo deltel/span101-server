@@ -1,7 +1,9 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+
 const wordRouter = require('./routes/words')
+const { speechType, wordType } = require('./utils/enums')
 
 const app = express()
 
@@ -23,7 +25,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/new-word', (req, res) => {
-    res.render('new-word')
+    res.render('new-word', { categories: wordType, partsOfSpeech: speechType })
 })
 
 app.get('/:id', (req, res) => {
