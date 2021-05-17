@@ -84,6 +84,7 @@ form .form-group, form button, .content-group, .title, .list .card, .header a.na
     grid-row-gap: 6px;
     padding: 0 28px;
     margin-bottom: 66px;
+    margin-top: 0;
 }
 
 .list a {
@@ -195,4 +196,28 @@ form button {
 .feedback.danger {
     display: block;
     background-color: #ff2626;
+}
+
+/* search box */
+.search {
+    margin: 8px auto;
+    padding: 1px 0;
+}
+
+.search form {
+    display: grid;
+    grid-auto-flow: column;
+    margin: 0 28px;
+}
+
+.search form input {
+    height: 30px;
+    margin: 7.5px 0;
+}
+
+.search form button {
+    height: 30px;
+    margin: 7.5px 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

@@ -1,4 +1,35 @@
 window.onload = async () => {
+    // searching
+    const searchBox = document.querySelector('input')
+    const form = document.querySelector('.search form')
+    const feedbackDiv = document.querySelector('.feedback')
+
+
+    const searchHandler = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await fetch(`/words/?search=${searchBox.value}`)
+
+            const responseJson = await response.json()
+
+            window.location.assign(`/${responseJson[0].id}`)
+        } catch (e) {
+            if (e.message.includes('Cannot read property \'id\' of undefined')) {
+                feedbackDiv.textContent = 'Word not found'
+                feedbackDiv.classList.toggle('danger')
+                
+                setTimeout(() => {
+                    feedbackDiv.textContent = undefined
+                    feedbackDiv.classList.toggle('danger')
+                }, 2000)
+            }
+        }
+    }
+
+    form.onsubmit = searchHandler
+
+    // loading data
     const listBody = document.querySelector('.list')
     const leftArrow = document.querySelector('.left')
     const rightArrow = document.querySelector('.right')
@@ -26,11 +57,11 @@ window.onload = async () => {
     }
 
     leftArrow.addEventListener('click', () => {
-        if (offset === 0) return 
+        if (offset === 0) return
         offset = offset - 20
         getData()
     })
-    
+
     rightArrow.addEventListener('click', () => {
         offset = offset + 20
         getData()
