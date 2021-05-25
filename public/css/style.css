@@ -221,3 +221,17 @@ form button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+@media (min-width:425px) {
+    .list {
+        margin: 0 auto 66px auto;
+    }
+
+    .search, .list {
+        width: 60%;
+    }
+
+    .search form {
+        margin: 0;
+    }
+}

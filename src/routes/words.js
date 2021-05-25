@@ -13,8 +13,8 @@ router.get('/', async (req, res) => {
         SELECT * 
         FROM words 
         WHERE value = $1;
-        `,
-            query.values = [req.query.search]
+        `
+            query.values = [req.query.search.toLowerCase()]
     } else {
         query.text = `
         SELECT id, value 
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         ORDER BY value
         LIMIT 20
         OFFSET $1;
-        `,
+        `
             query.values = [req.query.offset]
     }
 
@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
         INSERT INTO words (${inputKeys.join(', ')})
         VALUES (${inputParams.join(', ')})
         `,
-        values: [...inputValues]
+        values: [...inputValues].map(value => value.toLowerCase())
     }
 
     try {
