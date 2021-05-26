@@ -5,7 +5,8 @@ const {
     setUpDatabase,
     tearDown,
     invalidWord,
-    newWord
+    newWord,
+    client
 } = require('./fixtures/db')
 
 beforeEach(setUpDatabase)
@@ -32,6 +33,17 @@ test('Should find hola', async () => {
     })
 })
 
+test('Should find hola with \'ol\' as the search term', async () => {
+    const response = await request(app)
+        .get('/words?search=ol')
+        .send()
+        .expect(200)
+    expect(response.body.length).toBe(1)
+    expect(response.body[0]).toMatchObject({
+        value: 'hola'
+    })
+})
+
 test('Should update hola', async () => {
     await request(app)
         .patch('/words/hola')
@@ -42,11 +54,18 @@ test('Should update hola', async () => {
         .expect(200)
 })
 
-test('Should add new word to database', async () => {
+test('Should add new word to database in lowercase', async () => {
     await request(app)
         .post('/words')
         .send(newWord)
         .expect(201)
+    const response = await client.query('SELECT * FROM words WHERE value = \'pantalones\'')
+    expect(response.rows[0]).toMatchObject({
+        value: 'pantalones',
+        translation: 'pants',
+        category: 'non-verb',
+        part_of_speech: 'noun'
+    })
 })
 
 test('Should fail to add new word to database', async () => {

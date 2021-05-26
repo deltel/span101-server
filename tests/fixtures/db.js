@@ -22,8 +22,8 @@ const words = [
 ]
 
 const newWord = {
-    value: 'pantalones',
-    translation: 'pants',
+    value: 'Pantalones',
+    translation: 'Pants',
     category: 'non-verb',
     part_of_speech: 'noun'
 }
@@ -56,6 +56,7 @@ const tearDown = async () => {
 }
 
 module.exports = {
+    client,
     setUpDatabase,
     tearDown,
     newWord,

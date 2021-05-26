@@ -9,12 +9,15 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     const query = {}
     if (req.query.search) {
+        const searchTerm = `%${req.query.search.toLowerCase()}%`
         query.text = `
         SELECT * 
         FROM words 
-        WHERE value = $1;
+        WHERE value LIKE $1
+        ORDER BY value
+        LIMIT 5;
         `
-            query.values = [req.query.search.toLowerCase()]
+            query.values = [searchTerm]
     } else {
         query.text = `
         SELECT id, value 

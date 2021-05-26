@@ -188,6 +188,12 @@ form button {
     padding: 20px;
 }
 
+.feedback.info {
+    display: block;
+    color: #000;
+    background-color: #ccc;
+}
+
 .feedback.success {
     display: block;
     background-color: #1cd93c;
