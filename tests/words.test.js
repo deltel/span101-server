@@ -40,6 +40,14 @@ test("Should find hola with 'ol' as the search term", async () => {
   });
 });
 
+test('Should find "uno" and "cien"', async () => {
+  const response = await request(app)
+    .get("/words?category=number")
+    .send()
+    .expect(200);
+  expect(response.body.length).toBe(2);
+});
+
 test("Should update hola", async () => {
   await request(app)
     .patch("/words/hola")

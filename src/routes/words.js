@@ -18,6 +18,15 @@ router.get("/", async (req, res) => {
         LIMIT 5;
         `;
     query.values = [searchTerm];
+  } else if (req.query.category) {
+    const category = `${req.query.category.toLowerCase()}`;
+    query.text = `
+        SELECT * 
+        FROM words 
+        WHERE keyword = $1
+        ORDER BY value
+        `;
+    query.values = [category];
   } else {
     query.text = `
         SELECT id, value 
