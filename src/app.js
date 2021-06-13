@@ -1,35 +1,39 @@
-const path = require('path')
-const express = require('express')
-const hbs = require('hbs')
+const path = require("path");
+const express = require("express");
+const hbs = require("hbs");
 
-const wordRouter = require('./routes/words')
-const { speechType, wordType } = require('./utils/enums')
+const wordRouter = require("./routes/words");
+const { speechType, wordType } = require("./utils/enums");
 
-const app = express()
+const app = express();
 
-const partialsPath = path.join(__dirname, '../templates/partials')
-const viewsPath = path.join(__dirname, '../templates/views')
-const publicPath = path.join(__dirname, '../public')
+const partialsPath = path.join(__dirname, "../templates/partials");
+const viewsPath = path.join(__dirname, "../templates/views");
+const publicPath = path.join(__dirname, "../public");
 
-app.set('view engine', 'hbs')
-app.set('views', viewsPath)
-hbs.registerPartials(partialsPath)
+app.set("view engine", "hbs");
+app.set("views", viewsPath);
+hbs.registerPartials(partialsPath);
 
-app.use('/static', express.static(publicPath))
-app.use(express.json())
+app.use("/static", express.static(publicPath));
+app.use(express.json());
 
-app.use('/words', wordRouter)
+app.use("/words", wordRouter);
 
-app.get('/', (req, res) => {
-    res.render('index', {message: 'The beginning'})
-})
+app.get("/", (req, res) => {
+  res.render("index", { message: "The beginning" });
+});
 
-app.get('/new-word', (req, res) => {
-    res.render('new-word', { categories: wordType, partsOfSpeech: speechType })
-})
+app.get("/new-word", (req, res) => {
+  res.render("new-word", { categories: wordType, partsOfSpeech: speechType });
+});
 
-app.get('/:id', (req, res) => {
-    res.render('details')
-})
+app.get("/categories", (req, res) => {
+  res.render("categories");
+});
 
-module.exports = app
+app.get("/:id", (req, res) => {
+  res.render("details");
+});
+
+module.exports = app;
