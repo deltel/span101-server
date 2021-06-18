@@ -110,6 +110,22 @@ form button,
 }
 
 /* new word and details card */
+.edit-area {
+  margin: 12px 25px;
+  width: 40px;
+  height: 40px;
+  float: right;
+  background: #ffffff;
+  border: 0.1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.edit-area img {
+  margin: 2.5px auto;
+  display: block;
+}
+
 .form,
 .details-card {
   display: grid;
@@ -159,6 +175,7 @@ form button {
 .details-card {
   grid-template-rows: 35px 365px 50px;
   grid-row-gap: 25px;
+  clear: right;
 }
 
 .content {
