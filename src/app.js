@@ -32,6 +32,10 @@ app.get("/categories", (req, res) => {
   res.render("categories");
 });
 
+app.get("/edit/:id", (req, res) => {
+  res.render("edit-word", { categories: wordType, partsOfSpeech: speechType });
+});
+
 app.get("/:id", (req, res) => {
   res.render("details");
 });

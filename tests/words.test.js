@@ -50,7 +50,7 @@ test('Should find "uno" and "cien"', async () => {
 
 test("Should update hola", async () => {
   await request(app)
-    .patch("/words/hola")
+    .patch("/words/1")
     .send({
       translation: "hi",
       example: "Hola Juan",

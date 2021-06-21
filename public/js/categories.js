@@ -1,6 +1,7 @@
+import { executeRequest } from "./modules/executeRequest.js";
+
 const filterByCategory = async (category, listBody) => {
-  const response = await fetch(`/words?category=${category}`);
-  const data = await response.json();
+  const data = await executeRequest(`/words?category=${category}`);
 
   const populateList = (word) => {
     const listItem = document.createElement("li");
@@ -41,8 +42,7 @@ window.onload = async () => {
   const listBody = document.querySelector(".list");
 
   const getData = async () => {
-    const response = await fetch("/words/categories");
-    const data = await response.json();
+    const data = await executeRequest("/words/categories");
 
     listBody.innerHTML = null;
 

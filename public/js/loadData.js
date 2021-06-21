@@ -1,3 +1,5 @@
+import { executeRequest } from "./modules/executeRequest.js";
+
 window.onload = async () => {
   // searching
   const searchBox = document.querySelector("input");
@@ -8,9 +10,9 @@ window.onload = async () => {
 
   const searchHandler = async () => {
     try {
-      const response = await fetch(`/words/?search=${searchBox.value}`);
-
-      const responseJson = await response.json();
+      const responseJson = await executeRequest(
+        `/words/?search=${searchBox.value}`
+      );
 
       if (responseJson.length === 0) {
         feedbackDiv.textContent = "No matching words found";
@@ -71,8 +73,7 @@ window.onload = async () => {
   let offset = 0;
 
   const getData = async () => {
-    const response = await fetch("/words?offset=" + offset);
-    const data = await response.json();
+    const data = await executeRequest(`/words?offset=${offset}`);
 
     listBody.innerHTML = null;
 

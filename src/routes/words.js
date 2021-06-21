@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
     validateRequest(req.body);
 
     await client.query(query);
-    res.status(201).send();
+    res.status(201).send({});
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
@@ -105,26 +105,26 @@ router.get("/:value", async (req, res) => {
   }
 });
 
-router.patch("/:value", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   const values = getQueryValues(req.body);
 
   const query = {
     text: `
-        UPDATE words SET ${values.querySubstring} WHERE value = \'${req.params.value}\'
+        UPDATE words SET ${values.querySubstring} WHERE id = \'${req.params.id}\'
         `,
     values: values.updateValues,
   };
 
   try {
     await client.query(query);
-    res.send();
+    res.send({});
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
 });
 
-router.all((req, res) => {
-  res.status(404).send();
+router.all("*", (req, res) => {
+  res.status(404).send({});
 });
 
 module.exports = router;

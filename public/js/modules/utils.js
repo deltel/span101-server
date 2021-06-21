@@ -20,3 +20,7 @@ export const transformLabel = (label) => {
 
   return capitalizeWord(label);
 };
+
+export const getId = () => {
+  return window.location.pathname.split("/")[2];
+};
