@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
+const cors = require("cors");
 
 const wordRouter = require("./routes/words");
 const { speechType, wordType } = require("./utils/enums");
@@ -14,6 +15,8 @@ const publicPath = path.join(__dirname, "../public");
 app.set("view engine", "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
+
+app.use(cors());
 
 app.use("/static", express.static(publicPath));
 app.use(express.json());
