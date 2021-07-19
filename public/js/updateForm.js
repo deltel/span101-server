@@ -13,7 +13,6 @@ window.onload = async () => {
 
   const id = getId();
   const wordData = JSON.parse(localStorage.getItem("word"));
-  localStorage.removeItem("word");
 
   valueField.value = wordData.value;
   translationField.value = wordData.translation;
