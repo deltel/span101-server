@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   if (req.query.search) {
     const searchTerm = `%${req.query.search.toLowerCase()}%`;
     query.text = `
-        SELECT * 
+        SELECT id, value 
         FROM words 
         WHERE value LIKE $1
         ORDER BY value
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
   } else if (req.query.category) {
     const category = `${req.query.category.toLowerCase()}`;
     query.text = `
-        SELECT * 
+        SELECT id, value 
         FROM words 
         WHERE keyword = $1
         ORDER BY value
