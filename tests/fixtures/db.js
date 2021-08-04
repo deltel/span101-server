@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const client = require("../../src/db/pg");
 
 const words = [
@@ -39,6 +41,22 @@ const invalidWord = {
   part_of_speech: "",
 };
 
+const user = {
+  id: 1,
+  username: process.env.ADMIN_USERNAME,
+  password: process.env.ADMIN_PASSWORD,
+};
+
+const generateValidToken = () =>
+  jwt.sign({ sub: user.id, username: user.username }, process.env.JWT_SECRET, {
+    expiresIn: 60,
+  });
+
+const generateInvalidToken = () =>
+  jwt.sign({ sub: 2, username: user.username }, process.env.JWT_SECRET, {
+    expiresIn: 60,
+  });
+
 const setUpDatabase = async () => {
   try {
     await client.query("DELETE FROM words;");
@@ -68,4 +86,7 @@ module.exports = {
   tearDown,
   newWord,
   invalidWord,
+  generateValidToken,
+  generateInvalidToken,
+  user,
 };

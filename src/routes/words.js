@@ -3,6 +3,7 @@ const express = require("express");
 const client = require("../db/pg");
 const getQueryValues = require("../utils/queryUtil");
 const { validateRequest } = require("../utils/validateRequest");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -46,7 +47,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const inputKeys = Object.keys(req.body);
   const inputValues = Object.values(req.body);
 
@@ -105,7 +106,7 @@ router.get("/:value", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const values = getQueryValues(req.body);
 
   const query = {
@@ -121,10 +122,6 @@ router.patch("/:id", async (req, res) => {
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
-});
-
-router.all("*", (req, res) => {
-  res.status(404).send({});
 });
 
 module.exports = router;
