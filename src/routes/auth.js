@@ -1,12 +1,13 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { body } = require("express-validator");
 
 const client = require("../db/pg");
 
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
+router.post("/login", body("username").escape().trim(), async (req, res) => {
   const query = {
     text: "SELECT * FROM users WHERE username=$1",
     values: [req.body.username],
